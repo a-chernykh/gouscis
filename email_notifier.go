@@ -5,14 +5,14 @@ import (
 	"net/smtp"
 )
 
-type EmailNotifier struct {
-	Smtp      string
+type emailNotifier struct {
+	SMTP      string
 	Sender    string
 	Recipient string
 }
 
-func (notifier EmailNotifier) Notify(text string) {
-	c, err := smtp.Dial(notifier.Smtp)
+func (notifier emailNotifier) Notify(text string) {
+	c, err := smtp.Dial(notifier.SMTP)
 	check(err)
 
 	c.Mail(notifier.Sender)

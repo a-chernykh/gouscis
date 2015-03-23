@@ -9,11 +9,11 @@ import (
 	"path/filepath"
 )
 
-type Database struct {
+type database struct {
 	Path string
 }
 
-func (db *Database) caseStatusPath(caseNumber string) string {
+func (db *database) caseStatusPath(caseNumber string) string {
 	hash := sha256.New()
 	io.WriteString(hash, caseNumber)
 	hashedCaseNumber := fmt.Sprintf("%x", hash.Sum(nil))
@@ -21,12 +21,12 @@ func (db *Database) caseStatusPath(caseNumber string) string {
 	return filepath.Join(db.Path, hashedCaseNumber)
 }
 
-func (db *Database) create() {
+func (db *database) create() {
 	err := os.Mkdir(db.Path, 0755)
 	checkFileError(err)
 }
 
-func (db *Database) saveCaseStatus(caseNumber string, caseStatus *CaseStatus) {
+func (db *database) saveCaseStatus(caseNumber string, caseStatus *caseStatus) {
 	filePath := db.caseStatusPath(caseNumber)
 	f, err := os.Create(filePath)
 	check(err)
@@ -37,10 +37,10 @@ func (db *Database) saveCaseStatus(caseNumber string, caseStatus *CaseStatus) {
 	check(err)
 }
 
-func (db *Database) loadCaseStatus(caseNumber string) CaseStatus {
+func (db *database) loadCaseStatus(caseNumber string) caseStatus {
 	filePath := db.caseStatusPath(caseNumber)
 	dat, err := ioutil.ReadFile(filePath)
 	checkFileError(err)
 
-	return CaseStatus{Status: string(dat)}
+	return caseStatus{Status: string(dat)}
 }

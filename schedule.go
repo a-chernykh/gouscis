@@ -6,11 +6,11 @@ import (
 )
 
 const (
-	CheckDuration = "24h"
+	checkDuration = "24h"
 )
 
 func schedule(schedulerChan chan bool) {
-	duration, err := time.ParseDuration(CheckDuration)
+	duration, err := time.ParseDuration(checkDuration)
 	if err != nil {
 		log.Fatal(err)
 	}

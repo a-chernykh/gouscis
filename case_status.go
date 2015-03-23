@@ -4,11 +4,11 @@ import (
 	"fmt"
 )
 
-type CaseStatus struct {
+type caseStatus struct {
 	Status      string
 	Description string
 }
 
-func (cs CaseStatus) String() string {
+func (cs caseStatus) String() string {
 	return fmt.Sprintf("%s\n%s", cs.Status, cs.Description)
 }

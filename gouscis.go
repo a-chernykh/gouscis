@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	DatabasePath = "cases"
+	databasePath = "cases"
 )
 
 func main() {
@@ -19,12 +19,12 @@ func main() {
 		}
 	}
 
-	db := Database{Path: DatabasePath}
+	db := database{Path: databasePath}
 	db.create()
 
 	schedulerChan := make(chan bool)
 
-	notifier := EmailNotifier{Smtp: os.Getenv("SMTP_SERVER"),
+	notifier := emailNotifier{SMTP: os.Getenv("SMTP_SERVER"),
 		Sender:    "noreply@gouscis",
 		Recipient: os.Getenv("EMAIL")}
 

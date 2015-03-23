@@ -10,14 +10,14 @@ import (
 )
 
 const (
-	CaseStatusUrl = "https://egov.uscis.gov/casestatus/mycasestatus.do"
+	caseStatusURL = "https://egov.uscis.gov/casestatus/mycasestatus.do"
 
-	CaseStatusContainerSelector   = ".main-row"
-	CaseStatusSelector            = "h1"
-	CaseStatusDescriptionSelector = ".rows p"
+	caseStatusContainerSelector   = ".main-row"
+	caseStatusSelector            = "h1"
+	caseStatusDescriptionSelector = ".rows p"
 )
 
-func statusUpdate(schedulerChan chan bool, caseNumber string, db Database, notifier Notifier) {
+func statusUpdate(schedulerChan chan bool, caseNumber string, db database, notifier notifier) {
 	previousCaseStatus := db.loadCaseStatus(caseNumber)
 
 	for {
@@ -33,8 +33,8 @@ func statusUpdate(schedulerChan chan bool, caseNumber string, db Database, notif
 	}
 }
 
-func getLatestStatus(caseNumber string) CaseStatus {
-	resp, err := http.PostForm(CaseStatusUrl, url.Values{"appReceiptNum": {caseNumber}})
+func getLatestStatus(caseNumber string) caseStatus {
+	resp, err := http.PostForm(caseStatusURL, url.Values{"appReceiptNum": {caseNumber}})
 
 	if err != nil {
 		log.Fatal(err)
@@ -47,9 +47,9 @@ func getLatestStatus(caseNumber string) CaseStatus {
 		log.Fatal(err)
 	}
 
-	mainRow := doc.Find(CaseStatusContainerSelector)
-	status := mainRow.Find(CaseStatusSelector).First().Text()
-	description := mainRow.Find(CaseStatusDescriptionSelector).First().Text()
+	mainRow := doc.Find(caseStatusContainerSelector)
+	status := mainRow.Find(caseStatusSelector).First().Text()
+	description := mainRow.Find(caseStatusDescriptionSelector).First().Text()
 
-	return CaseStatus{status, description}
+	return caseStatus{status, description}
 }

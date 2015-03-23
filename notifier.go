@@ -1,5 +1,5 @@
 package main
 
-type Notifier interface {
+type notifier interface {
 	Notify(text string)
 }
