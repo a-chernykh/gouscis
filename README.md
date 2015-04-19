@@ -10,7 +10,7 @@ make install
 
 ```sh
 export EMAIL=my@email.com
-export SMTP_SERVER=127.0.0.1
+export SMTP_SERVER=127.0.0.1:25
 export CASE_NUMBER=MSC0000000000
 
 gouscis
